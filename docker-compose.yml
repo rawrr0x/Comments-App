@@ -1,0 +1,32 @@
+services:
+  comments-backend:
+    container_name: comments-backend
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '${PORT}:5000'
+    command: npm run start
+    depends_on:
+      - comments-postgres
+    restart: always
+  comments-postgres:
+    container_name: comments-postgres
+    image: postgres:18
+    env_file:
+      - .env
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: ${POSTGRES_NAME}
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pg_data:
