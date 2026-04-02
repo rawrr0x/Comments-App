@@ -7,7 +7,7 @@ export const dataSource = new DataSource({
   port: Number(process.env.POSTGRES_PORT),
   username: process.env.POSTGRES_USER,
   password: String(process.env.POSTGRES_PASSWORD),
-  database: process.env.POSTGRES_DB,
+  database: process.env.POSTGRES_NAME,
   entities: [__dirname + '/../modules/**/*.entity{.js,.ts}'],
   migrations: [__dirname + '/migrations/**/*{.js,.ts}'],
   logging: true,

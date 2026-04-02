@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         port: configService.getOrThrow<number>('POSTGRES_PORT'),
         username: configService.getOrThrow<string>('POSTGRES_USER'),
         password: configService.getOrThrow<string>('POSTGRES_PASSWORD'),
-        database: configService.getOrThrow<string>('POSTGRES_DB'),
+        database: configService.getOrThrow<string>('POSTGRES_NAME'),
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
