@@ -11,6 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBody,
   ApiOperation,
   ApiParam,
   ApiQuery,
@@ -22,6 +23,7 @@ import { PaginationDto } from 'src/common/utils/pagination/pagination.dto';
 import { CreateCommentRequestDto } from './dto/create-comment-request.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { LoginDto } from '../auth/dto/login.dto';
 
 @ApiTags('comments')
 @Controller('comments')
@@ -62,6 +64,9 @@ export class CommentsController {
     return this.commentsService.findAllCommentReplies(id, paginationDto);
   }
 
+  @ApiOperation({ summary: 'Login' })
+  @ApiBody({ type: LoginDto, description: 'Data for creating comment' })
+  @ApiResponse({ status: 201, description: 'Comment have been created' })
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() dto: CreateCommentRequestDto) {

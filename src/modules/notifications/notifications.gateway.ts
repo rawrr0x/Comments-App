@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import {
   OnGatewayConnection,
@@ -13,7 +13,7 @@ import { SocketClientData } from '../../common/interfaces/socket-client-data.int
 
 @WebSocketGateway({
   cors: {
-    origin: '*',
+    origin: process.env.CLIENT_ORIGIN,
     credentials: true,
   },
 })
@@ -39,6 +39,8 @@ export class NotificationsGateway
     const cookies = client.handshake.headers.cookie;
 
     if (!cookies) {
+      console.log('no cookies');
+      console.log(cookies);
       return null;
     }
 
@@ -61,6 +63,8 @@ export class NotificationsGateway
       (token) => token.type === 'accessToken',
     )?.token;
 
+    console.log('extract');
+
     return accessToken;
   }
 
@@ -69,6 +73,7 @@ export class NotificationsGateway
       const accessToken = this.extractTokenFromCookies(client);
 
       if (!accessToken) {
+        Logger.error('disconnected_1');
         return client.disconnect();
       }
 
@@ -82,12 +87,15 @@ export class NotificationsGateway
       const user = await this.usersService.findByEmail(payload.email);
 
       if (!user) {
+        Logger.error('disconnected_2');
         return client.disconnect();
       }
 
       if (!this.userSockets.has(user.id)) {
         this.userSockets.set(user.id, new Set());
       }
+
+      console.log('user');
 
       this.userSockets.get(user.id)?.add(client.id);
 

@@ -9,7 +9,7 @@ export const setTokenToCookies = (
   return res.cookie(name, token, {
     httpOnly: true,
     secure: false,
-    sameSite: 'strict',
+    sameSite: 'lax',
     maxAge,
   });
 };

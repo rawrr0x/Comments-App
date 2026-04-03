@@ -21,6 +21,11 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: process.env.CLIENT_ORIGIN,
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Comments App')
     .setDescription('Comments App API documnetation')
