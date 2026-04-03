@@ -1,5 +1,5 @@
 import { BaseEntity } from '../../common/base.entity';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../users/users.entity';
 
 @Entity('comments')
@@ -15,4 +15,17 @@ export class Comment extends BaseEntity {
 
   @Column()
   userId: number;
+
+  @ManyToOne(() => Comment, (comment) => comment.replies, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'parentId' })
+  parent: Comment | null;
+
+  @Column({ nullable: true })
+  parentId: number | null;
+
+  @OneToMany(() => Comment, (comment) => comment.parent)
+  replies: Comment[];
 }

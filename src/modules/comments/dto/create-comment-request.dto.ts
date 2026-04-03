@@ -1,4 +1,4 @@
-import { IsString, Length } from 'class-validator';
+import { IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateCommentRequestDto {
   @IsString()
@@ -12,4 +12,8 @@ export class CreateCommentRequestDto {
     message: 'Password length should be only between 1 and 500 symbols',
   })
   text: string;
+
+  @IsOptional()
+  @IsNumber()
+  parentId?: number | null;
 }
