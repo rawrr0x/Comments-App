@@ -14,9 +14,11 @@ services:
     depends_on:
       - comments-postgres
     restart: always
+    networks:
+      - comments-network
   comments-postgres:
     container_name: comments-postgres
-    image: postgres:18
+    image: postgres:17
     env_file:
       - .env
     environment:
@@ -27,6 +29,12 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     restart: always
+    networks:
+      - comments-network
 
 volumes:
   pg_data:
+
+networks:
+  comments-network:
+    driver: bridge

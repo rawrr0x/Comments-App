@@ -5,12 +5,14 @@ import { PaginationDto } from 'src/common/utils/pagination/pagination.dto';
 import { UsersService } from '../users/users.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     private readonly commentRepository: CommentRepository,
     private readonly usersService: UsersService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async findAll(paginationDto: PaginationDto) {
@@ -45,6 +47,30 @@ export class CommentsService {
       userId: user.id,
       parentId: dto.parentId ?? null,
     };
+
+    if (!dto.parentId) {
+      await this.notificationsService.notifyUser(user.id, 'Comment created');
+      return this.commentRepository.create(createCommentDto);
+    }
+
+    await this.notificationsService.notifyUser(user.id, 'Replied');
+
+    const parentComment = await this.commentRepository.findOneById(
+      dto.parentId,
+    );
+
+    if (!parentComment) {
+      throw new NotFoundException('Comment not found');
+    }
+
+    const parentCommentOwner = await this.usersService.findById(
+      parentComment.userId,
+    );
+
+    await this.notificationsService.notifyUser(
+      parentCommentOwner.id,
+      `${user.email} replied to your comment ID: ${parentComment.id}`,
+    );
 
     return this.commentRepository.create(createCommentDto);
   }
