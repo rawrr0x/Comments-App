@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './db/database.module';
 import { UsersModule } from './modules/users/users.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     DatabaseModule,
     UsersModule,
     CommentsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
