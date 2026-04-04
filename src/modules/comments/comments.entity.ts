@@ -28,4 +28,7 @@ export class Comment extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.parent)
   replies: Comment[];
+
+  @Column({ type: 'varchar', nullable: true })
+  fileUrl: string | null;
 }

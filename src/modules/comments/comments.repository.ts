@@ -31,6 +31,7 @@ export class CommentRepository extends BaseRepository<Comment> {
       userId: comment.userId,
       parentId: comment.parentId,
       repliesCount: comment.replies.length,
+      fileUrl: comment.fileUrl ?? null,
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
     }));
@@ -54,6 +55,7 @@ export class CommentRepository extends BaseRepository<Comment> {
       userId: comment.userId,
       parentId: comment.parentId,
       repliesCount: comment.replies.length,
+      fileUrl: comment.fileUrl ?? null,
       createdAt: comment.createdAt,
       updatedAt: comment.updatedAt,
     }));

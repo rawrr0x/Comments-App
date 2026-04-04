@@ -7,6 +7,7 @@ import { UsersModule } from './modules/users/users.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { FilesModule } from './modules/files/files.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     CommentsModule,
     AuthModule,
     NotificationsModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

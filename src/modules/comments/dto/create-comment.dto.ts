@@ -10,4 +10,8 @@ export class CreateCommentDto {
   @IsOptional()
   @IsNumber()
   parentId?: number | null;
+
+  @IsOptional()
+  @IsString()
+  fileUrl?: string | null;
 }

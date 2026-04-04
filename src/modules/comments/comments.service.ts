@@ -46,6 +46,7 @@ export class CommentsService {
       text: dto.text,
       userId: user.id,
       parentId: dto.parentId ?? null,
+      fileUrl: dto.fileUrl ?? null,
     };
 
     if (!dto.parentId) {
