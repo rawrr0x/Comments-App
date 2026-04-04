@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+const isSslEnabled = (value: string | undefined) => value === 'true';
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -16,6 +18,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         autoLoadEntities: true,
         synchronize: false,
         logging: true,
+        ssl: isSslEnabled(configService.get<string>('POSTGRES_SSL'))
+          ? { rejectUnauthorized: false }
+          : false,
       }),
     }),
   ],

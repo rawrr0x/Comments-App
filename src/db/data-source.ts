@@ -1,6 +1,8 @@
 import { DataSource } from 'typeorm';
 import 'dotenv/config';
 
+const isSslEnabled = process.env.POSTGRES_SSL === 'true';
+
 export const dataSource = new DataSource({
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
@@ -11,4 +13,5 @@ export const dataSource = new DataSource({
   entities: [__dirname + '/../modules/**/*.entity{.js,.ts}'],
   migrations: [__dirname + '/migrations/**/*{.js,.ts}'],
   logging: true,
+  ssl: isSslEnabled ? { rejectUnauthorized: false } : false,
 });

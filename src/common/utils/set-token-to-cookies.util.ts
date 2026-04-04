@@ -1,5 +1,7 @@
 import { Response } from 'express';
 
+const isSecureCookieEnabled = process.env.COOKIE_SECURE === 'true';
+
 export const setTokenToCookies = (
   res: Response,
   name: string,
@@ -8,7 +10,7 @@ export const setTokenToCookies = (
 ) => {
   return res.cookie(name, token, {
     httpOnly: true,
-    secure: false,
+    secure: isSecureCookieEnabled,
     sameSite: 'lax',
     maxAge,
   });
