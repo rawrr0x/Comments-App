@@ -1,29 +1,37 @@
-<p align="center">Comments App</p>
+<p align="center">Comments App Documentation</p>
 
-## Description
+# Before first start of project you need:
+- install dependencies
+- create and fill out .env files ( described in .env.sample )
+- run all migrations
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+## Install dependencies
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+## Compile and run the project for local deployment
 
 ```bash
-# development
-$ npm run start
+# run backend and db
+$ docker-compose up
 
-# watch mode
-$ npm run start:dev
+# stop backend and db
+$ docker-compose down
 
-# production mode
-$ npm run start:prod
+# build
+$ docker-compose build
+
+# run all migrations
+$ docker exec -it comment-backend npm run migration:run
+
+# generate a migration
+$ docker exec -it comment-backend npm run migration:genarate
+
 ```
 
-## Run tests
+## Run tests ( No tests in this project )
 
 ```bash
 # unit tests
